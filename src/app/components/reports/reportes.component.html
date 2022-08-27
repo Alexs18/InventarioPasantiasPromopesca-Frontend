@@ -1,0 +1,163 @@
+<div class="Content mb-5" id="MainContent">
+
+    <div class="OpcionPdf mt-3">
+        <button id="BtnSearch" (click)="MakePdf(GeneralResume)" style="width: 200px; padding: 5px;" class="btn btn-danger">Generar PDF</button>
+    </div>
+    <div id="CabeceraStock" class="CabeceraStock">
+        <div class="Search">
+            <h5 class="Title_Header">BUSCAR STOCK POR:</h5>
+            <div class="Content_Header">
+                <div class="ContentStock">
+                    <button id="BtnSearch" (click)="SearchGroup()" class="btn btn-primary">Buscar Grupo</button>
+                    <br>
+                    <div class="form-check form-check-inline">
+                        <input type="checkbox" [(ngModel)]="Grupo.congelado" name="congelado">
+                        <!-- <p>{{Grupo|json}}</p> -->
+                        <label class="form-check-label" for="inlineCheckbox2">CONGELADO</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input type="checkbox" [(ngModel)]="Grupo.conserva"  name="conserva">
+                        <label class="form-check-label" for="inlineCheckbox2">CONSERVA</label>
+                    </div>
+                </div>
+                <div class="ContentStock">
+                    <button id="BtnSearchEnvase" (click)="SearchEnvase()" class="btn btn-primary">Tipo Envase</button>
+                    <br>
+                    <div class="form-check form-check-inline">
+                        <input type="checkbox" [(ngModel)]="Envase.palagicos" name="GrupoConserva" id="GrupoPalagicos">
+                        <label class="form-check-label" for="inlineCheckbox2">Palagicos</label>
+                        <!-- <p>{{Envase | json}}</p> -->
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input type="checkbox" [(ngModel)]="Envase.atun" name="GrupoCongelado" id="GrupoAtun">
+                        <label class="form-check-label" for="inlineCheckbox2">Atun</label>
+                    </div>
+                </div>
+                <div class="ContentStock">
+                    <!-- {{Exportacion | json}} -->
+                    <button id="BtnSearchFormato" (click)="SearchEstadoExportacion()" class="btn btn-primary">Estado de Exportación</button>
+                    <br>
+                    <div class="form-check form-check-inline">
+                        <input type="checkbox" [(ngModel)]="Exportacion.defmayor" name="defmayor" id="GrupoFormato">
+                        <label class="form-check-label" for="inlineCheckbox2">Def Mayor</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input type="checkbox" name="defmenor" [(ngModel)]="Exportacion.defmenor" id="GrupoCobertura">
+                        <label class="form-check-label" for="inlineCheckbox2">Def Menor</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input type="checkbox" name="defcritico" [(ngModel)]="Exportacion.defcritico" id="GrupoCobertura">
+                        <label class="form-check-label" for="inlineCheckbox2">Def Critico</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input type="checkbox" name="bueno" [(ngModel)]="Exportacion.bueno" id="GrupoCobertura">
+                        <label class="form-check-label" for="inlineCheckbox2">Bueno</label>
+                    </div>
+                </div>
+                <div class="ContentStock">
+                    <button id="BtnSearchFormato" (click)="SearchFormato()" class="btn btn-primary">Formato</button>
+                    <br> <br>
+                    <div class="form-check form-check-inline">
+                        <select [(ngModel)]="formatoselect" class="form-select form-select-sm" aria-label=".form-select-sm example" style="margin: 0 0 0 -20px;">
+                            <option *ngFor="let formato of selectformato; let i = index" selected>
+                                {{formato.Nombre_Items_Tipo_Envase}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="ContentStock">
+                    <button id="BtnSearchFormato" (click)="SearchLiquido()" class="btn btn-primary">Liquido Cobertura</button>
+                    <br> <br>
+                    <div class="form-check form-check-inline">
+                        <select  [(ngModel)]="liquidoselect" class="form-select form-select-sm" aria-label=".form-select-sm example" style="margin: 0 0 0 -20px;">
+                            <option *ngFor="let liquidocobertura of selectliquidocobertura; let i = index" selected>
+                                {{liquidocobertura.Nombre_Items_Liq_Cobertura}}
+                            </option>
+                          </select>
+                    </div>
+                </div>
+            </div>    
+        </div>
+        
+        <div class="Content_Total mt-4">
+            <h3>Total Cajas:  <span id="TotalCajasMain">  {{SaldoTotales(TodasLasCuentas(GeneralResume)).toFixed(2)}}</span></h3>
+            <h3>Total Unidades: <span id="TotalUnidadesMain"></span> {{CuentasTotales(TodasLasCuentas(GeneralResume))}} </h3>
+        </div>
+    </div>
+
+    <div class="TableContent">
+        <div id="Filtros" class="Contenidos3">
+            <div class="Contenido3_Tabla_Content" *ngFor="let item of GeneralResume;let i = index;">
+                <div>
+                    <div class="Header_Product">
+                        <div>
+                            <!-- <p>Cajas pruebas</p>
+                            <p>{{CuentasTotales0(item[0].nombre_items)}}</p>
+                            <p>Numero: {{item.length}}</p>
+                            <button (click)="CuentasTotales0(item[0].nombre_items)">Hola</button>
+                            <p>{{i}}</p> -->
+                            <p>Total Cajas: <span>{{SaldoTotales(item).toFixed(2)}}</span></p>
+                            <p>Unidades Disponibles: <span>{{CuentasTotales(item)}}</span></p>
+                        </div>
+                        <h5>{{item[0].nombre_items}}</h5>
+                    </div>
+                <div class="Contenidos3_Tabla">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">CODIGOERP</th>
+                            <th scope="col">PRODUCTO</th>
+                            <th scope="col">SALDO_UNIDADES</th>
+                            <th scope="col">SALDO_CAJAS</th>
+                            <th scope="col">FECHA_PRODUCCION</th>
+                            <th scope="col">OBSERVACIONES_CALIDAD</th>
+                            <th scope="col">ESTADO_CALIDAD</th>
+                            <th scope="col">TIPO_DEFECTO</th>
+                            <th scope="col">CODIGO_LATA</th>
+                            <th scope="col">AÑO_INGRESO_BODEGA</th>
+                            <th scope="col">MES_INGRESO_BODEGA</th>
+                            <th scope="col">FORMATO</th>
+                            <th scope="col">LIQUIDO_COBERTURA</th>
+                            <th scope="col">RECIBIDO</th>
+                            <th scope="col">STICKER</th>
+                            <th scope="col">ETIQUETAS</th>
+                            <th scope="col">CARTON</th>
+                        </tr>
+                        </thead>
+                        <tbody id="TablaAuto${TablaId}" *ngFor="let item2 of item; let i = index">
+                            <tr>
+                                <td> {{i}}</td>
+                                <td> {{item2.CodigoErp}}</td>
+                                <td> {{item2.nombre_items}}</td>
+                                <td> {{item2.saldo}}</td>
+                                <td> {{item2.cajas.toFixed(2)}}</td>
+                                <td> {{item2.fecha_produccion}}</td>
+                                <td> {{item2.Obs_Calidad}}</td>
+                                <td> {{item2.estado_calidad}}</td>
+                                <td> {{item2.tipo_defecto_pt}}</td>
+                                <td> {{item2.codigo_lata}}</td>
+                                <td> {{item2.Anio_Ingreso_Bodega}}</td>
+                                <td> {{item2.Mes_Ingreso_Bodega}}</td>
+                                <td> {{item2.Nombre_Items_Tipo_Envase}}</td>
+                                <td> {{item2.Nombre_Items_Liq_Cobertura}}</td>
+                                <td> {{item2.Recibido}}</td>
+                                <td> {{item2.Sticker}}</td>
+                                <td> {{item2.Etiquetas}}</td>
+                                <td> {{item2.Carton}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <!-- <p>{{GeneralResume[GeneralResume.length-1]}}</p>
+    <p>Hola</p> -->
+    <p>Total De Registros: <span>{{GeneralResume.length}}</span></p>
+
+    <!-- <button (click)="Resumen()">Primer Resumen</button> -->
+    <!-- <button (click)="Hola()">Hola</button> -->
+</div>

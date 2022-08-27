@@ -1,0 +1,26 @@
+.Menu{
+    display: flex;
+    justify-content: space-between;
+    width: 95%;
+    align-items: center;
+    flex-wrap: wrap;
+    &_Main{
+        display: flex;
+        width: 35%;
+        justify-content: space-around;
+        align-items: center;
+        flex-wrap: wrap;
+        &_Subtitle{
+            color: black;
+            font-size: 30px;
+            span{
+                color: rgb(12, 193, 238);
+            }
+        }
+    }
+    &_Nav{
+    }
+}
+.toolbar{
+    height: auto;
+}
